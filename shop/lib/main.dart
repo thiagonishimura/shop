@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shop/models/product_detail_page.dart';
 import 'package:shop/pages/products_overview_page.dart';
+import 'package:shop/utils/app_routers.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +22,9 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Lato',
       ),
       home: ProductsOverviewPage(),
+      routes: {
+        AppRouters.PRODUCT_DETAIL: (ctx) => ProductDetailPage(),
+      },
       debugShowCheckedModeBanner: false,
     );
   }

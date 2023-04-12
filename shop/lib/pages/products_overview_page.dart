@@ -11,7 +11,10 @@ class ProductsOverviewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Minha Loja'),
+        title: Container(
+          alignment: Alignment.center,
+          child: const Text('Minha Loja'),
+        ),
       ),
       body: GridView.builder(
         padding: const EdgeInsets.all(10),
