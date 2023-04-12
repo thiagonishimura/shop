@@ -15,7 +15,7 @@ class Product {
     this.isFavorite = false,
   });
 
-  void toogleFAvorite() {
+  void toggleFavorite() {
     isFavorite = !isFavorite;
   }
 }
