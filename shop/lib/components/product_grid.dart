@@ -9,7 +9,6 @@ class ProductGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<ProductList>(
       context,
-      listen: false,
     );
     final List<Product> loadedProducts = provider.items;
 
