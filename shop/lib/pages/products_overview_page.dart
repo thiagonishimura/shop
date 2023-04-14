@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/components/badgee.dart';
 import 'package:shop/models/cart.dart';
+import 'package:shop/utils/app_routers.dart';
 import '../components/product_grid.dart';
 
 enum filterOptions {
@@ -33,7 +34,11 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
               child: child!,
             ),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  AppRouters.CART,
+                );
+              },
               icon: Icon(Icons.shopping_cart),
             ),
           ),
