@@ -29,20 +29,6 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           child: const Text('Minha Loja'),
         ),
         actions: [
-          Consumer<Cart>(
-            builder: (ctx, cart, child) => Badgee(
-              value: cart.itemsCount.toString(),
-              child: child!,
-            ),
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  AppRouters.CART,
-                );
-              },
-              icon: Icon(Icons.shopping_cart),
-            ),
-          ),
           PopupMenuButton(
             icon: Icon(Icons.more_vert),
             itemBuilder: (_) => [
@@ -64,6 +50,20 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
                 }
               });
             },
+          ),
+          Consumer<Cart>(
+            builder: (ctx, cart, child) => Badgee(
+              value: cart.itemsCount.toString(),
+              child: child!,
+            ),
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  AppRouters.CART,
+                );
+              },
+              icon: Icon(Icons.shopping_cart),
+            ),
           ),
         ],
       ),
