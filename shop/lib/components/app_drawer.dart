@@ -12,7 +12,13 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: [
           AppBar(
-            title: Text('Bem-vindo usuário!!'),
+            title: Container(
+              alignment: Alignment.center,
+              child: Text(
+                'Bem-vindo usuário!',
+              ),
+            ),
+            automaticallyImplyLeading: false,
           ),
           Divider(),
           ListTile(
@@ -27,7 +33,7 @@ class AppDrawer extends StatelessWidget {
           Divider(),
           ListTile(
             leading: Icon(Icons.payment),
-            title: Text('Pagamentos'),
+            title: Text('Pedidos'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(
                 AppRouters.ORDERS,
