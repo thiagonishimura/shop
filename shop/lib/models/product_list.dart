@@ -5,21 +5,32 @@ import 'package:shop/data/dummy_data.dart';
 import 'package:shop/models/product.dart';
 
 class ProductList with ChangeNotifier {
-  List<Product> _items = dummyProducts;
+  final List<Product> _items = dummyProducts;
 
   List<Product> get items => [..._items];
-  List<Product> get FavoriteItems =>
+  List<Product> get favoriteItems =>
       _items.where((prod) => prod.isFavorite).toList();
 
-  void addProductFromData(Map<String, Object> data) {
-    final newProduct = Product(
-      id: Random().nextDouble().toString(),
+  int get itemsCount {
+    return _items.length;
+  }
+
+  void saveProduct(Map<String, Object> data) {
+    bool hasId = data['id'] != null;
+
+    final product = Product(
+      id: hasId ? data['id'] as String : Random().nextDouble().toString(),
       name: data['name'] as String,
       description: data['description'] as String,
       price: data['price'] as double,
       imageUrl: data['imageUrl'] as String,
     );
-    addProduct(newProduct);
+
+    if (hasId) {
+      updateProduct(product);
+    } else {
+      addProduct(product);
+    }
   }
 
   void addProduct(Product product) {
@@ -27,12 +38,15 @@ class ProductList with ChangeNotifier {
     notifyListeners();
   }
 
-  int get itemsCount {
-    return _items.length;
+  void updateProduct(Product product) {
+    int index = _items.indexWhere((p) => p.id == product.id);
+
+    if (index >= 0) {
+      _items[index] = product;
+      notifyListeners();
+    }
   }
 }
-
-// Outra forma de filtra os favoritos.
 
 // bool _showFavoriteOnly = false;
 

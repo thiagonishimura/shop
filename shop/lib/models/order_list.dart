@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:shop/models/cart.dart';
 import 'package:shop/models/order.dart';
@@ -21,10 +20,11 @@ class OrderList with ChangeNotifier {
       Order(
         id: Random().nextDouble().toString(),
         total: cart.totalAmount,
-        produts: cart.items.values.toList(),
         date: DateTime.now(),
+        products: cart.items.values.toList(),
       ),
     );
+
     notifyListeners();
   }
 }

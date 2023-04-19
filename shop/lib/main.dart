@@ -9,7 +9,7 @@ import 'package:shop/pages/product_detail_page.dart';
 import 'package:shop/pages/product_form_page.dart';
 import 'package:shop/pages/products_overview_page.dart';
 import 'package:shop/pages/products_page.dart';
-import 'package:shop/utils/app_routers.dart';
+import 'package:shop/utils/app_routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,14 +41,14 @@ class MyApp extends StatelessWidget {
           ),
           fontFamily: 'Lato',
         ),
-        //home: ProductsOverviewPage(),
+        // home: const ProductsOverviewPage(),
         routes: {
-          AppRouters.HOME: (ctx) => ProductsOverviewPage(),
-          AppRouters.PRODUCT_DETAIL: (ctx) => ProductDetailPage(),
-          AppRouters.CART: (ctx) => CartPage(),
-          AppRouters.ORDERS: (ctx) => OrdersPage(),
-          AppRouters.PRODUCTS: (ctx) => ProductsPage(),
-          AppRouters.PRODUCT_FORM: (ctx) => ProductFormPage(),
+          AppRoutes.home: (ctx) => const ProductsOverviewPage(),
+          AppRoutes.productDetail: (ctx) => const ProductDetailPage(),
+          AppRoutes.cart: (ctx) => const CartPage(),
+          AppRoutes.orders: (ctx) => const OrdersPage(),
+          AppRoutes.products: (ctx) => const ProductsPage(),
+          AppRoutes.productForm: (ctx) => const ProductFormPage(),
         },
         debugShowCheckedModeBanner: false,
       ),

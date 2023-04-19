@@ -6,31 +6,42 @@ import 'package:shop/models/cart_item.dart';
 class CartItemWidget extends StatelessWidget {
   final CartItem cartItem;
 
-  const CartItemWidget(
-    this.cartItem, {
-    super.key,
-  });
+  const CartItemWidget(this.cartItem, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
       key: ValueKey(cartItem.id),
       direction: DismissDirection.endToStart,
+      background: Container(
+        color: Theme.of(context).errorColor,
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(right: 20),
+        margin: const EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 4,
+        ),
+        child: const Icon(
+          Icons.delete,
+          color: Colors.white,
+          size: 40,
+        ),
+      ),
       confirmDismiss: (_) {
         return showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: Text('Tem Certeza?'),
-            content: Text('Quer remover o item do carrinho?'),
+            title: const Text('Tem Certeza?'),
+            content: const Text('Quer remover o item do carrinho?'),
             actions: [
               TextButton(
-                child: Text('Não'),
+                child: const Text('Não'),
                 onPressed: () {
                   Navigator.of(ctx).pop(false);
                 },
               ),
               TextButton(
-                child: Text('Sim'),
+                child: const Text('Sim'),
                 onPressed: () {
                   Navigator.of(ctx).pop(true);
                 },
@@ -45,22 +56,8 @@ class CartItemWidget extends StatelessWidget {
           listen: false,
         ).removeItem(cartItem.productId);
       },
-      background: Container(
-        color: Theme.of(context).colorScheme.error,
-        child: Icon(
-          Icons.delete,
-          color: Colors.white,
-          size: 40,
-        ),
-        alignment: AlignmentDirectional.centerEnd,
-        padding: EdgeInsets.only(right: 20),
-        margin: EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 4,
-        ),
-      ),
       child: Card(
-        margin: EdgeInsetsDirectional.symmetric(
+        margin: const EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
         ),
@@ -71,16 +68,15 @@ class CartItemWidget extends StatelessWidget {
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Colors.white,
               child: Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: FittedBox(
                   child: Text('${cartItem.price}'),
                 ),
               ),
             ),
             title: Text(cartItem.name),
-            subtitle: Text(
-                'Total R\$ ${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}'),
-            trailing: Text('${cartItem.quantity}X'),
+            subtitle: Text('Total: R\$ ${cartItem.price * cartItem.quantity}'),
+            trailing: Text('${cartItem.quantity}x'),
           ),
         ),
       ),

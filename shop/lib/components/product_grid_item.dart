@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop/models/cart.dart';
 import 'package:shop/models/product.dart';
-import 'package:shop/utils/app_routers.dart';
+import 'package:shop/utils/app_routes.dart';
 
 class ProductGridItem extends StatelessWidget {
+  const ProductGridItem({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
@@ -36,12 +38,12 @@ class ProductGridItem extends StatelessWidget {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('Produto adicionado com sucesso!'),
-                  duration: Duration(seconds: 2),
+                  content: const Text('Produto adicionado com sucesso!'),
+                  duration: const Duration(seconds: 2),
                   action: SnackBarAction(
                     label: 'DESFAZER',
                     onPressed: () {
-                      cart.removoSingleItem(product.id);
+                      cart.removeSingleItem(product.id);
                     },
                   ),
                 ),
@@ -57,7 +59,7 @@ class ProductGridItem extends StatelessWidget {
           ),
           onTap: () {
             Navigator.of(context).pushNamed(
-              AppRouters.PRODUCT_DETAIL,
+              AppRoutes.productDetail,
               arguments: product,
             );
           },
