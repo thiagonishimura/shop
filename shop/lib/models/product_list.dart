@@ -37,7 +37,7 @@ class ProductList with ChangeNotifier {
   }
 
   void addProduct(Product product) {
-    post(
+    final futuro = post(
       Uri.parse('$_baseUrl/products.json'),
       body: jsonEncode(
         {
@@ -50,8 +50,18 @@ class ProductList with ChangeNotifier {
       ),
     );
 
-    _items.add(product);
-    notifyListeners();
+    futuro.then((response) {
+      final id = jsonDecode(response.body)['name'];
+      _items.add(Product(
+        id: id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        isFavorite: product.isFavorite,
+      ));
+      notifyListeners();
+    });
   }
 
   void updateProduct(Product product) {
