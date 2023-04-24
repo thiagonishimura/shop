@@ -20,7 +20,37 @@ class ProductGridItem extends StatelessWidget {
           leading: Consumer<Product>(
             builder: (ctx, product, _) => IconButton(
               onPressed: () {
-                product.toggleFavorite();
+                if (!product.isFavorite) {
+                  product.toggleFavorite();
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text('Adicionado aos favoritos!'),
+                      duration: const Duration(seconds: 2),
+                      action: SnackBarAction(
+                        label: 'DESFAZER',
+                        onPressed: () {
+                          product.toggleFavorite();
+                        },
+                      ),
+                    ),
+                  );
+                } else {
+                  product.toggleFavorite();
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text('Removido dos favoritos!'),
+                      duration: const Duration(seconds: 2),
+                      action: SnackBarAction(
+                        label: 'DESFAZER',
+                        onPressed: () {
+                          product.toggleFavorite();
+                        },
+                      ),
+                    ),
+                  );
+                }
               },
               icon: Icon(
                   product.isFavorite ? Icons.favorite : Icons.favorite_border),
