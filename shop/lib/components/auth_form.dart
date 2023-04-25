@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop/models/auth.dart';
 
-enum AuthMode { signUp, login }
+enum AuthMode { signup, login }
 
 class AuthForm extends StatefulWidget {
-  const AuthForm({super.key});
+  const AuthForm({Key? key}) : super(key: key);
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -13,40 +15,48 @@ class _AuthFormState extends State<AuthForm> {
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-
   AuthMode _authMode = AuthMode.login;
-  Map<String, String> _authData = {
+  final Map<String, String> _authData = {
     'email': '',
     'password': '',
   };
+
   bool _isLogin() => _authMode == AuthMode.login;
-  bool _isSignup() => _authMode == AuthMode.signUp;
-
-  void _submit() {
-    final _isValid = _formKey.currentState?.validate() ?? false;
-    if (!_isValid) {
-      return;
-    }
-    setState(() => _isLoading = true);
-
-    _formKey.currentState?.save();
-    if (_isLogin()) {
-      // Logar
-    } else {
-      //Registrars
-    }
-
-    setState(() => _isLoading = false);
-  }
+  bool _isSignup() => _authMode == AuthMode.signup;
 
   void _switchAuthMode() {
     setState(() {
       if (_isLogin()) {
-        _authMode = AuthMode.signUp;
+        _authMode = AuthMode.signup;
       } else {
         _authMode = AuthMode.login;
       }
     });
+  }
+
+  Future<void> _submit() async {
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    if (!isValid) {
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    _formKey.currentState?.save();
+    Auth auth = Provider.of(context, listen: false);
+
+    if (_isLogin()) {
+      // Login
+    } else {
+      // Registrar
+      await auth.signup(
+        _authData['email']!,
+        _authData['password']!,
+      );
+    }
+
+    setState(() => _isLoading = false);
   }
 
   @override
@@ -66,20 +76,20 @@ class _AuthFormState extends State<AuthForm> {
           child: Column(
             children: [
               TextFormField(
-                decoration: const InputDecoration(label: Text('E-mail')),
+                decoration: const InputDecoration(labelText: 'E-mail'),
                 keyboardType: TextInputType.emailAddress,
                 onSaved: (email) => _authData['email'] = email ?? '',
                 validator: (_email) {
                   final email = _email ?? '';
                   if (email.trim().isEmpty || !email.contains('@')) {
-                    return 'Informe um email válido';
+                    return 'Informe um e-mail válido.';
                   }
                   return null;
                 },
               ),
               TextFormField(
-                decoration: const InputDecoration(label: Text('Senha')),
-                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(labelText: 'Senha'),
+                keyboardType: TextInputType.emailAddress,
                 obscureText: true,
                 controller: _passwordController,
                 onSaved: (password) => _authData['password'] = password ?? '',
@@ -94,39 +104,39 @@ class _AuthFormState extends State<AuthForm> {
               if (_isSignup())
                 TextFormField(
                   decoration:
-                      const InputDecoration(label: Text('Confirmar senha')),
-                  keyboardType: TextInputType.text,
+                      const InputDecoration(labelText: 'Confirmar Senha'),
+                  keyboardType: TextInputType.emailAddress,
+                  obscureText: true,
                   validator: _isLogin()
                       ? null
                       : (_password) {
                           final password = _password ?? '';
-                          if (password != _passwordController) {
+                          if (password != _passwordController.text) {
                             return 'Senhas informadas não conferem.';
                           }
                           return null;
                         },
-                  obscureText: true,
                 ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               if (_isLoading)
-                CircularProgressIndicator()
+                const CircularProgressIndicator()
               else
                 ElevatedButton(
                   onPressed: _submit,
-                  child: Text(
-                    _isLogin() ? 'ENTRAR' : 'REGISTRAR',
-                  ),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    padding: EdgeInsets.symmetric(
+                    padding: const EdgeInsets.symmetric(
                       horizontal: 30,
                       vertical: 8,
                     ),
                   ),
+                  child: Text(
+                    _authMode == AuthMode.login ? 'ENTRAR' : 'REGISTRAR',
+                  ),
                 ),
-              Spacer(),
+              const Spacer(),
               TextButton(
                 onPressed: _switchAuthMode,
                 child: Text(
