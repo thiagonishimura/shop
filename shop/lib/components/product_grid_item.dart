@@ -23,7 +23,10 @@ class ProductGridItem extends StatelessWidget {
             builder: (ctx, product, _) => IconButton(
               onPressed: () {
                 if (!product.isFavorite) {
-                  product.toggleFavorite(auth.token ?? '');
+                  product.toggleFavorite(
+                    auth.token ?? '',
+                    auth.userId ?? '',
+                  );
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -32,13 +35,19 @@ class ProductGridItem extends StatelessWidget {
                       action: SnackBarAction(
                         label: 'DESFAZER',
                         onPressed: () {
-                          product.toggleFavorite(auth.token ?? '');
+                          product.toggleFavorite(
+                            auth.token ?? '',
+                            auth.userId ?? '',
+                          );
                         },
                       ),
                     ),
                   );
                 } else {
-                  product.toggleFavorite(auth.token ?? '');
+                  product.toggleFavorite(
+                    auth.token ?? '',
+                    auth.userId ?? '',
+                  );
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -47,7 +56,10 @@ class ProductGridItem extends StatelessWidget {
                       action: SnackBarAction(
                         label: 'DESFAZER',
                         onPressed: () {
-                          product.toggleFavorite(auth.token ?? '');
+                          product.toggleFavorite(
+                            auth.token ?? '',
+                            auth.userId ?? '',
+                          );
                         },
                       ),
                     ),

@@ -14,7 +14,10 @@ class OrderList with ChangeNotifier {
     return [..._items];
   }
 
-  OrderList(this._token, this._items);
+  OrderList([
+    this._token = '',
+    this._items = const [],
+  ]);
 
   int get itemsCount {
     return _items.length;
