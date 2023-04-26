@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/models/auth.dart';
 import 'package:shop/models/cart.dart';
 import 'package:shop/models/product.dart';
 import 'package:shop/utils/app_routes.dart';
@@ -11,6 +12,7 @@ class ProductGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
+    final auth = Provider.of<Auth>(context, listen: false);
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -21,7 +23,7 @@ class ProductGridItem extends StatelessWidget {
             builder: (ctx, product, _) => IconButton(
               onPressed: () {
                 if (!product.isFavorite) {
-                  product.toggleFavorite();
+                  product.toggleFavorite(auth.token ?? '');
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -30,13 +32,13 @@ class ProductGridItem extends StatelessWidget {
                       action: SnackBarAction(
                         label: 'DESFAZER',
                         onPressed: () {
-                          product.toggleFavorite();
+                          product.toggleFavorite(auth.token ?? '');
                         },
                       ),
                     ),
                   );
                 } else {
-                  product.toggleFavorite();
+                  product.toggleFavorite(auth.token ?? '');
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -45,7 +47,7 @@ class ProductGridItem extends StatelessWidget {
                       action: SnackBarAction(
                         label: 'DESFAZER',
                         onPressed: () {
-                          product.toggleFavorite();
+                          product.toggleFavorite(auth.token ?? '');
                         },
                       ),
                     ),
