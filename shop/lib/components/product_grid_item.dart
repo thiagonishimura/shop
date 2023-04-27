@@ -22,49 +22,10 @@ class ProductGridItem extends StatelessWidget {
           leading: Consumer<Product>(
             builder: (ctx, product, _) => IconButton(
               onPressed: () {
-                if (!product.isFavorite) {
-                  product.toggleFavorite(
-                    auth.token ?? '',
-                    auth.userId ?? '',
-                  );
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: const Text('Adicionado aos favoritos!'),
-                      duration: const Duration(seconds: 2),
-                      action: SnackBarAction(
-                        label: 'DESFAZER',
-                        onPressed: () {
-                          product.toggleFavorite(
-                            auth.token ?? '',
-                            auth.userId ?? '',
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                } else {
-                  product.toggleFavorite(
-                    auth.token ?? '',
-                    auth.userId ?? '',
-                  );
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: const Text('Removido dos favoritos!'),
-                      duration: const Duration(seconds: 2),
-                      action: SnackBarAction(
-                        label: 'DESFAZER',
-                        onPressed: () {
-                          product.toggleFavorite(
-                            auth.token ?? '',
-                            auth.userId ?? '',
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                }
+                product.toggleFavorite(
+                  auth.token ?? '',
+                  auth.userId ?? '',
+                );
               },
               icon: Icon(
                   product.isFavorite ? Icons.favorite : Icons.favorite_border),
@@ -97,10 +58,16 @@ class ProductGridItem extends StatelessWidget {
           ),
         ),
         child: GestureDetector(
-          child: Image.network(
-            product.imageUrl,
+          child: FadeInImage(
+            placeholder:
+                const AssetImage('assets/images/product-placeholder.png'),
+            image: NetworkImage(product.imageUrl),
             fit: BoxFit.cover,
           ),
+          // child: Image.network(
+          //   product.imageUrl,
+          //   fit: BoxFit.cover,
+          // ),
           onTap: () {
             Navigator.of(context).pushNamed(
               AppRoutes.productDetail,
