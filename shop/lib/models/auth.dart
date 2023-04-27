@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shop/data/store.dart';
 import 'package:shop/exceptions/auth_exception.dart';
-import 'package:shop/utils/constants.dart';
 
 class Auth with ChangeNotifier {
   String? _token;
@@ -104,6 +103,7 @@ class Auth with ChangeNotifier {
     _userId = null;
     _expiryDate = null;
     _clearLogoutTimer();
+    Store.remove('userData');
     notifyListeners();
   }
 
